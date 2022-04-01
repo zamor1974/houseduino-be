@@ -1,0 +1,1031 @@
+definitions:
+  Activities:
+    items:
+      $ref: '#/definitions/Activity'
+    type: array
+    x-go-package: houseduino-be/models
+  Activity:
+    properties:
+      data_inserimento:
+        description: |-
+          Timestamp of insert
+          in: time
+        format: date-time
+        type: string
+        x-go-name: DateInsert
+      id:
+        description: |-
+          Id of Activity value
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Id
+      valore:
+        description: |-
+          Value of Activity
+          in: int
+        format: int64
+        type: integer
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  Altitude:
+    properties:
+      data_inserimento:
+        description: |-
+          Timestamp of insert
+          in: time
+        format: date-time
+        type: string
+        x-go-name: DateInsert
+      id:
+        description: |-
+          Id of rain value
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Id
+      valore:
+        description: |-
+          Value of Altitude
+          in: int
+        format: float
+        type: number
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  Altitudes:
+    items:
+      $ref: '#/definitions/Altitude'
+    type: array
+    x-go-package: houseduino-be/models
+  CommonError:
+    properties:
+      message:
+        description: |-
+          Message of the error
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  CommonSuccess:
+    properties:
+      message:
+        description: |-
+          Message of the error
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetActivities:
+    properties:
+      data:
+        $ref: '#/definitions/Activities'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetActivity:
+    properties:
+      data:
+        $ref: '#/definitions/Activity'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetAltitude:
+    properties:
+      data:
+        $ref: '#/definitions/Altitude'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetAltitudes:
+    properties:
+      data:
+        $ref: '#/definitions/Altitudes'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetHumidities:
+    properties:
+      data:
+        $ref: '#/definitions/Humidities'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetHumidity:
+    properties:
+      data:
+        $ref: '#/definitions/Humidity'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetIsActive:
+    properties:
+      active:
+        description: |-
+          Message of the response
+          in: string
+        type: boolean
+        x-go-name: Active
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetMessage:
+    properties:
+      data:
+        $ref: '#/definitions/Message'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetMessages:
+    properties:
+      data:
+        $ref: '#/definitions/Messages'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetPressure:
+    properties:
+      data:
+        $ref: '#/definitions/Pressure'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetPressures:
+    properties:
+      data:
+        $ref: '#/definitions/Pressures'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetRain:
+    properties:
+      data:
+        $ref: '#/definitions/Rain'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetRains:
+    properties:
+      data:
+        $ref: '#/definitions/Rains'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetTemperature:
+    properties:
+      data:
+        $ref: '#/definitions/Temperature'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetTemperatures:
+    properties:
+      data:
+        $ref: '#/definitions/Temperatures'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  Humidities:
+    items:
+      $ref: '#/definitions/Humidity'
+    type: array
+    x-go-package: houseduino-be/models
+  Humidity:
+    properties:
+      data_inserimento:
+        description: |-
+          Timestamp of insert
+          in: time
+        format: date-time
+        type: string
+        x-go-name: DateInsert
+      id:
+        description: |-
+          Id of rain value
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Id
+      valore:
+        description: |-
+          Value of Humidity
+          in: int
+        format: float
+        type: number
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  Message:
+    properties:
+      data_inserimento:
+        description: |-
+          Timestamp of insert
+          in: time
+        format: date-time
+        type: string
+        x-go-name: DateInsert
+      id:
+        description: |-
+          Id of Message value
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Id
+      messaggio:
+        description: |-
+          Value of Message
+          in: int
+        type: string
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  Messages:
+    items:
+      $ref: '#/definitions/Message'
+    type: array
+    x-go-package: houseduino-be/models
+  Pressure:
+    properties:
+      data_inserimento:
+        description: |-
+          Timestamp of insert
+          in: time
+        format: date-time
+        type: string
+        x-go-name: DateInsert
+      id:
+        description: |-
+          Id of Pressure value
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Id
+      valore:
+        description: |-
+          Value of Pressure
+          in: float
+        format: float
+        type: number
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  Pressures:
+    items:
+      $ref: '#/definitions/Pressure'
+    type: array
+    x-go-package: houseduino-be/models
+  Rain:
+    properties:
+      data_inserimento:
+        description: |-
+          Timestamp of insert
+          in: time
+        format: date-time
+        type: string
+        x-go-name: DateInsert
+      id:
+        description: |-
+          Id of rain value
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Id
+      valore:
+        description: |-
+          Value of rain
+          in: int
+        format: int64
+        type: integer
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  Rains:
+    items:
+      $ref: '#/definitions/Rain'
+    type: array
+    x-go-package: houseduino-be/models
+  ReqAddActivity:
+    properties:
+      valore:
+        description: |-
+          Value of the Activity
+          in: int
+        format: int64
+        type: integer
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  ReqAddAltitude:
+    properties:
+      valore:
+        description: |-
+          Value of the Altitude
+          in: int
+        format: float
+        type: number
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  ReqAddHumidity:
+    properties:
+      valore:
+        description: |-
+          Value of the Humidity
+          in: int
+        format: float
+        type: number
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  ReqAddPressure:
+    properties:
+      valore:
+        description: |-
+          Value of the Pressure
+          in: float
+        format: float
+        type: number
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  ReqAddRain:
+    properties:
+      valore:
+        description: |-
+          Value of the rain
+          in: int
+        format: int64
+        type: integer
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  ReqAddTemperature:
+    properties:
+      valore:
+        description: |-
+          Value of the Temperature
+          in: float
+        format: float
+        type: number
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  Temperature:
+    properties:
+      data_inserimento:
+        description: |-
+          Timestamp of insert
+          in: time
+        format: date-time
+        type: string
+        x-go-name: DateInsert
+      id:
+        description: |-
+          Id of Temperature value
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Id
+      valore:
+        description: |-
+          Value of Temperature
+          in: float
+        format: float
+        type: number
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  Temperatures:
+    items:
+      $ref: '#/definitions/Temperature'
+    type: array
+    x-go-package: houseduino-be/models
+info:
+  title: 'Houseduino Api:'
+  version: 0.1.1
+paths:
+  /activity/all:
+    get:
+      description: Get Activity list
+      operationId: activityAll
+      responses:
+        "200":
+          description: GetActivities
+          schema:
+            $ref: '#/definitions/GetActivities'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - activity
+  /activity/insert:
+    post:
+      description: Create a new Activity value
+      operationId: activityPOST
+      responses:
+        "200":
+          description: GetActivity
+          schema:
+            $ref: '#/definitions/GetActivity'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - activity
+  /activity/isactive:
+    get:
+      description: Get if sensor is online or offline
+      operationId: activityIsActive
+      responses:
+        "200":
+          description: GetIsActive
+          schema:
+            $ref: '#/definitions/GetIsActive'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - activity
+  /activity/lasthour:
+    get:
+      description: Get list of last hour of Activity .... or the last value inserted
+      operationId: activityLasthour
+      responses:
+        "200":
+          description: GetActivities
+          schema:
+            $ref: '#/definitions/GetActivities'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - activity
+  /altitude/all:
+    get:
+      description: Get Altitude list
+      operationId: altitudeAll
+      responses:
+        "200":
+          description: GetAltitudes
+          schema:
+            $ref: '#/definitions/GetAltitudes'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - altitude
+  /altitude/insert:
+    post:
+      description: Create a new altitude value
+      operationId: altitudePost
+      responses:
+        "200":
+          description: GetAltitude
+          schema:
+            $ref: '#/definitions/GetAltitude'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - altitude
+  /altitude/lasthour:
+    get:
+      description: Get list of last hour of altitude values .... or the last value
+        inserted
+      operationId: altitudeLastHour
+      responses:
+        "200":
+          description: GetAltitudes
+          schema:
+            $ref: '#/definitions/GetAltitudes'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - altitude
+  /altitude/showdata/{recordNumber}:
+    get:
+      description: Get list of recordNumber of altitude values
+      operationId: altitudeShowdata
+      parameters:
+      - description: maximum numnber of results to return
+        format: int32
+        in: path
+        name: recordNumber
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: GetAltitudes
+          schema:
+            $ref: '#/definitions/GetAltitudes'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - altitude
+  /humidity/all:
+    get:
+      description: Get humidity list
+      operationId: humidityAll
+      responses:
+        "200":
+          description: GetHumidities
+          schema:
+            $ref: '#/definitions/GetHumidities'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - humidity
+  /humidity/insert:
+    post:
+      description: Create a new humidity value
+      operationId: humidityPost
+      responses:
+        "200":
+          description: GetHumidity
+          schema:
+            $ref: '#/definitions/GetHumidity'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - humidity
+  /humidity/lasthour:
+    get:
+      description: Get list of last hour of humidity values .... or the last value
+        inserted
+      operationId: humiditylastHour
+      responses:
+        "200":
+          description: GetHumidities
+          schema:
+            $ref: '#/definitions/GetHumidities'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - humidity
+  /humidity/showdata/{recordNumber}:
+    get:
+      description: Get list of recordNumber of humidity values
+      operationId: humidityShowdata
+      parameters:
+      - description: maximum numnber of results to return
+        format: int32
+        in: path
+        name: recordNumber
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: GetHumidities
+          schema:
+            $ref: '#/definitions/GetHumidities'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - humidity
+  /message/insert:
+    post:
+      description: Create a new Message value
+      operationId: messagePost
+      responses:
+        "200":
+          description: GetMessage
+          schema:
+            $ref: '#/definitions/GetMessage'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - message
+  /message/lasthour:
+    get:
+      description: Get list of last hour of Messages .... or the last value inserted
+      operationId: messageLastHour
+      responses:
+        "200":
+          description: GetMessages
+          schema:
+            $ref: '#/definitions/GetMessages'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - message
+  /pressure/all:
+    get:
+      description: Get Pressure list
+      operationId: pressureAll
+      responses:
+        "200":
+          description: GetPressures
+          schema:
+            $ref: '#/definitions/GetPressures'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - pressure
+  /pressure/insert:
+    post:
+      description: Create a new pressure value
+      operationId: pressurePost
+      responses:
+        "200":
+          description: GetPressure
+          schema:
+            $ref: '#/definitions/GetPressure'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - pressure
+  /pressure/lasthour:
+    get:
+      description: Get list of last hour of pressure values .... or the last value
+        inserted
+      operationId: pressureLastHour
+      responses:
+        "200":
+          description: GetPressures
+          schema:
+            $ref: '#/definitions/GetPressures'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - pressure
+  /pressure/showdata/{recordNumber}:
+    get:
+      description: Get list of recordNumber of pressure values
+      operationId: pressureShowdata
+      parameters:
+      - description: maximum numnber of results to return
+        format: int32
+        in: path
+        name: recordNumber
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: GetPressures
+          schema:
+            $ref: '#/definitions/GetPressures'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - pressure
+  /rain/all:
+    get:
+      description: Get rains list
+      operationId: rainAll
+      responses:
+        "200":
+          description: GetRains
+          schema:
+            $ref: '#/definitions/GetRains'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - rain
+  /rain/insert:
+    post:
+      description: Create a new rain value
+      operationId: rainPost
+      responses:
+        "200":
+          description: GetRain
+          schema:
+            $ref: '#/definitions/GetRain'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - rain
+  /rain/lasthour:
+    get:
+      description: Get list of last hour of rain .... or the last value inserted
+      operationId: rainLastHour
+      responses:
+        "200":
+          description: GetRains
+          schema:
+            $ref: '#/definitions/GetRains'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - rain
+  /rain/showdata/{recordNumber}:
+    get:
+      description: Get list of recordNumber of rain values
+      operationId: rainShowdata
+      parameters:
+      - description: maximum numnber of results to return
+        format: int32
+        in: path
+        name: recordNumber
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: GetRains
+          schema:
+            $ref: '#/definitions/GetRains'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - rain
+  /temperature/all:
+    get:
+      description: Get Temperature list
+      operationId: temperatureAll
+      responses:
+        "200":
+          description: GetTemperatures
+          schema:
+            $ref: '#/definitions/GetTemperatures'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - temperature
+  /temperature/insert:
+    post:
+      description: Create a new temperature value
+      operationId: temperaturePost
+      responses:
+        "200":
+          description: GetTemperature
+          schema:
+            $ref: '#/definitions/GetTemperature'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - temperature
+  /temperature/lasthour:
+    get:
+      description: Get list of last hour of temperature values .... or the last value
+        inserted
+      operationId: temperatureLastHour
+      responses:
+        "200":
+          description: GetTemperatures
+          schema:
+            $ref: '#/definitions/GetTemperatures'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - temperature
+  /temperature/showdata/{recordNumber}:
+    get:
+      description: Get list of recordNumber of temperature values
+      operationId: temperatureShowdata
+      parameters:
+      - description: maximum numnber of results to return
+        format: int32
+        in: path
+        name: recordNumber
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: GetTemperatures
+          schema:
+            $ref: '#/definitions/GetTemperatures'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - temperature
+produces:
+- application/json
+schemes:
+- http
+swagger: "2.0"
