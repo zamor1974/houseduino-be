@@ -72,7 +72,7 @@ func (h *BaseHandlerSqlx) GetPressuresLastHourSqlx(w http.ResponseWriter, r *htt
 	json.NewEncoder(w).Encode(response)
 }
 
-// swagger:route POST /pressure/insert pressure pressurePost
+// swagger:route POST /pressure/insert pressure addPressure
 // Create a new pressure value
 //
 // responses:
@@ -85,7 +85,6 @@ func (h *BaseHandlerSqlx) PostPressureSqlx(w http.ResponseWriter, r *http.Reques
 	decoder := json.NewDecoder(r.Body)
 	var reqPressure *models.ReqAddPressure
 	err := decoder.Decode(&reqPressure)
-	fmt.Println(err)
 
 	if err != nil {
 		json.NewEncoder(w).Encode(ErrHandler(lang.Get("invalid_request")))

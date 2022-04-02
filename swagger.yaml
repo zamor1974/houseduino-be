@@ -528,6 +528,16 @@ definitions:
         x-go-name: Value
     type: object
     x-go-package: houseduino-be/models
+  ReqAddMessage:
+    properties:
+      messaggio:
+        description: |-
+          Value of the Message
+          in: string
+        type: string
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
   ReqAddPressure:
     properties:
       valore:
@@ -613,7 +623,15 @@ paths:
   /activity/insert:
     post:
       description: Create a new Activity value
-      operationId: activityPOST
+      operationId: addActivity
+      parameters:
+      - description: 'name: body'
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/ReqAddActivity'
+        x-go-name: Body
       responses:
         "200":
           description: GetActivity
@@ -673,7 +691,15 @@ paths:
   /altitude/insert:
     post:
       description: Create a new altitude value
-      operationId: altitudePost
+      operationId: addAltitude
+      parameters:
+      - description: 'name: body'
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/ReqAddAltitude'
+        x-go-name: Body
       responses:
         "200":
           description: GetAltitude
@@ -741,7 +767,15 @@ paths:
   /humidity/insert:
     post:
       description: Create a new humidity value
-      operationId: humidityPost
+      operationId: addHumidity
+      parameters:
+      - description: 'name: body'
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/ReqAddHumidity'
+        x-go-name: Body
       responses:
         "200":
           description: GetHumidity
@@ -794,7 +828,15 @@ paths:
   /message/insert:
     post:
       description: Create a new Message value
-      operationId: messagePost
+      operationId: addMessage
+      parameters:
+      - description: 'name: body'
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/ReqAddMessage'
+        x-go-name: Body
       responses:
         "200":
           description: GetMessage
@@ -839,7 +881,15 @@ paths:
   /pressure/insert:
     post:
       description: Create a new pressure value
-      operationId: pressurePost
+      operationId: addPressure
+      parameters:
+      - description: 'name: body'
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/ReqAddPressure'
+        x-go-name: Body
       responses:
         "200":
           description: GetPressure
@@ -907,7 +957,15 @@ paths:
   /rain/insert:
     post:
       description: Create a new rain value
-      operationId: rainPost
+      operationId: addRain
+      parameters:
+      - description: 'name: body'
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/ReqAddRain'
+        x-go-name: Body
       responses:
         "200":
           description: GetRain
@@ -974,7 +1032,15 @@ paths:
   /temperature/insert:
     post:
       description: Create a new temperature value
-      operationId: temperaturePost
+      operationId: addTemperature
+      parameters:
+      - description: 'name: body'
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/ReqAddTemperature'
+        x-go-name: Body
       responses:
         "200":
           description: GetTemperature

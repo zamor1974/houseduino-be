@@ -136,7 +136,7 @@ func PostActivitySqlx(db *sql.DB, reqrain *ReqAddActivity) (*Activity, string) {
 
 	//sqlStatement := fmt.Sprintf("insert into 'pioggia' ('valore','data_inserimento') values (%d,CURRENT_TIMESTAMP) RETURNING id", value)
 	sqlStatement := "insert into attivita (data_inserimento) values (CURRENT_TIMESTAMP) RETURNING id"
-
+	//log.Println(sqlStatement)
 	err := db.QueryRow(sqlStatement).Scan(&lastInsertId)
 
 	if err != nil {
