@@ -74,6 +74,8 @@ func main() {
 	houseduino_be.HandleFunc("/humidity/lasthour", hsqlx.GetHumiditiesLastHourSqlx).Methods("GET")
 	houseduino_be.HandleFunc("/humidity/showdata/{recordNumber}", hsqlx.GetHumidityShowDataSqlx).Methods("GET")
 
+	houseduino_be.HandleFunc("/weather/now", hsqlx.GetWeatherSqlx).Methods("GET")
+
 	http.Handle("/", r)
 	s := &http.Server{
 		Addr:    fmt.Sprintf("%s:%s", "", "5557"),

@@ -76,6 +76,23 @@ func GetLastTemperatureSqlx(db *sql.DB) *Temperatures {
 	}
 	return &temperatures
 }
+func GetLastTemperature2Sqlx(db *sql.DB) Temperature {
+	temperatures := Temperatures{}
+	rows, err := db.Query(constants.TEMPERATURE_GET_LAST)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var p Temperature
+		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
+			log.Fatal(err)
+		}
+		temperatures = append(temperatures, p)
+	}
+	return temperatures[0]
+}
 func GetTemperaturesLastHourSqlx(db *sql.DB) *Temperatures {
 	temperatures := Temperatures{}
 

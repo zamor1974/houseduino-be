@@ -376,6 +376,25 @@ definitions:
         x-go-name: Status
     type: object
     x-go-package: houseduino-be/controllers
+  GetWeather:
+    properties:
+      data:
+        $ref: '#/definitions/Weather'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
   Humidities:
     items:
       $ref: '#/definitions/Humidity'
@@ -590,6 +609,37 @@ definitions:
     items:
       $ref: '#/definitions/Temperature'
     type: array
+    x-go-package: houseduino-be/models
+  Weather:
+    properties:
+      humidity:
+        description: |-
+          Value of humidity
+          in: float32
+        format: float
+        type: number
+        x-go-name: Humidity
+      pressure:
+        description: |-
+          Value of pressure
+          in: float32
+        format: float
+        type: number
+        x-go-name: Pressure
+      temperature:
+        description: |-
+          Value of temperature
+          in: float32
+        format: float
+        type: number
+        x-go-name: Temperature
+      weather_prevision:
+        description: |-
+          Weather prevision
+          in: string
+        type: string
+        x-go-name: WeatherPrevision
+    type: object
     x-go-package: houseduino-be/models
 info:
   title: 'Houseduino Api:'
@@ -1024,6 +1074,21 @@ paths:
             $ref: '#/definitions/CommonError'
       tags:
       - temperature
+  /weather/now:
+    get:
+      description: Get weather data
+      operationId: weatherNow
+      responses:
+        "200":
+          description: GetWeather
+          schema:
+            $ref: '#/definitions/GetWeather'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - weather
 produces:
 - application/json
 schemes:
