@@ -13,7 +13,7 @@ const ACTIVITY_GET_LASTHOUR = "SELECT id,0, data_inserimento FROM attivita where
 
 const MESSAGE_GET_LAST = "SELECT id, messaggio, data_inserimento FROM messaggio where id = (select max(id) from attivita)"
 const MESSAGE_GET_LASTHOUR = "SELECT id,messaggio, data_inserimento FROM messaggio where data_inserimento  >= '%s' AND data_inserimento <= '%s'"
-const MESSAGE_POST_DATA = "insert into messaggio (messaggio,data_inserimento) values (%s,CURRENT_TIMESTAMP) RETURNING id"
+const MESSAGE_POST_DATA = "insert into messaggio (messaggio,data_inserimento) values ('%s',CURRENT_TIMESTAMP) RETURNING id"
 
 const RAIN_GET = "SELECT id, valore, data_inserimento FROM pioggia order by id desc limit 100"
 const RAIN_GET_LAST = "SELECT id, valore, data_inserimento FROM pioggia where id = (select max(id) from pioggia)"

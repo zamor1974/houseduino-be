@@ -30,7 +30,7 @@ type ReqAddPressure struct {
 	Value float32 `json:"valore" validate:"required"`
 }
 
-// swagger:parameters add Pressure
+// swagger:parameters addPressure
 type ReqPressureBody struct {
 	// - name: body
 	//  in: body

@@ -72,7 +72,7 @@ func (h *BaseHandlerSqlx) GetRainsLastHourSqlx(w http.ResponseWriter, r *http.Re
 	json.NewEncoder(w).Encode(response)
 }
 
-// swagger:route POST /rain/insert rain rainPost
+// swagger:route POST /rain/insert rain addRain
 // Create a new rain value
 //
 // responses:
@@ -85,7 +85,6 @@ func (h *BaseHandlerSqlx) PostRainSqlx(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	var reqRain *models.ReqAddRain
 	err := decoder.Decode(&reqRain)
-	fmt.Println(err)
 
 	if err != nil {
 		json.NewEncoder(w).Encode(ErrHandler(lang.Get("invalid_request")))

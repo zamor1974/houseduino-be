@@ -30,7 +30,7 @@ type ReqAddHumidity struct {
 	Value float32 `json:"valore" validate:"required"`
 }
 
-// swagger:parameters add Humidity
+// swagger:parameters addHumidity
 type ReqHumidityBody struct {
 	// - name: body
 	//  in: body
@@ -136,7 +136,7 @@ func PostHumiditySqlx(db *sql.DB, reqHumidity *ReqAddHumidity) (*Humidity, strin
 
 	//sqlStatement := fmt.Sprintf("insert into 'pioggia' ('valore','data_inserimento') values (%d,CURRENT_TIMESTAMP) RETURNING id", value)
 	sqlStatement := fmt.Sprintf(constants.HUMIDITY_POST_DATA, value)
-
+	log.Println(sqlStatement)
 	err := db.QueryRow(sqlStatement).Scan(&lastInsertId)
 
 	if err != nil {

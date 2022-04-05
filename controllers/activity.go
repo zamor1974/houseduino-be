@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"houseduino-be/lang"
 	"houseduino-be/models"
 	"net/http"
@@ -98,7 +97,7 @@ func (h *BaseHandlerSqlx) GetActivitiesLastHourSqlx(w http.ResponseWriter, r *ht
 	json.NewEncoder(w).Encode(response)
 }
 
-// swagger:route POST /activity/insert activity activityPOST
+// swagger:route POST /activity/insert activity addActivity
 // Create a new Activity value
 //
 // responses:
@@ -111,7 +110,7 @@ func (h *BaseHandlerSqlx) PostActivitySqlx(w http.ResponseWriter, r *http.Reques
 	decoder := json.NewDecoder(r.Body)
 	var reqActivity *models.ReqAddActivity
 	err := decoder.Decode(&reqActivity)
-	fmt.Println(err)
+	//fmt.Println(err)
 
 	if err != nil {
 		json.NewEncoder(w).Encode(ErrHandler(lang.Get("invalid_request")))

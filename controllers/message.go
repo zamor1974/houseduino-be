@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"houseduino-be/lang"
 	"houseduino-be/models"
 	"net/http"
@@ -50,7 +49,7 @@ func (h *BaseHandlerSqlx) GetMessagesLastHourSqlx(w http.ResponseWriter, r *http
 	json.NewEncoder(w).Encode(response)
 }
 
-// swagger:route POST /message/insert message messagePost
+// swagger:route POST /message/insert message addMessage
 // Create a new Message value
 //
 // responses:
@@ -63,7 +62,6 @@ func (h *BaseHandlerSqlx) PostMessageSqlx(w http.ResponseWriter, r *http.Request
 	decoder := json.NewDecoder(r.Body)
 	var reqMessage *models.ReqAddMessage
 	err := decoder.Decode(&reqMessage)
-	fmt.Println(err)
 
 	if err != nil {
 		json.NewEncoder(w).Encode(ErrHandler(lang.Get("invalid_request")))

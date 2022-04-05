@@ -30,7 +30,7 @@ type ReqAddAltitude struct {
 	Value float32 `json:"valore" validate:"required"`
 }
 
-// swagger:parameters add Altitude
+// swagger:parameters addAltitude
 type ReqAltitudeBody struct {
 	// - name: body
 	//  in: body

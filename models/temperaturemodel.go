@@ -30,7 +30,7 @@ type ReqAddTemperature struct {
 	Value float32 `json:"valore" validate:"required"`
 }
 
-// swagger:parameters add Temperature
+// swagger:parameters addTemperature
 type ReqTemperatureBody struct {
 	// - name: body
 	//  in: body

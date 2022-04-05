@@ -72,7 +72,7 @@ func (h *BaseHandlerSqlx) GetTemperaturesLastHourSqlx(w http.ResponseWriter, r *
 	json.NewEncoder(w).Encode(response)
 }
 
-// swagger:route POST /temperature/insert temperature temperaturePost
+// swagger:route POST /temperature/insert temperature addTemperature
 // Create a new temperature value
 //
 // responses:
@@ -85,7 +85,6 @@ func (h *BaseHandlerSqlx) PostTemperatureSqlx(w http.ResponseWriter, r *http.Req
 	decoder := json.NewDecoder(r.Body)
 	var reqTemperature *models.ReqAddTemperature
 	err := decoder.Decode(&reqTemperature)
-	fmt.Println(err)
 
 	if err != nil {
 		json.NewEncoder(w).Encode(ErrHandler(lang.Get("invalid_request")))

@@ -72,7 +72,7 @@ func (h *BaseHandlerSqlx) GetHumiditiesLastHourSqlx(w http.ResponseWriter, r *ht
 	json.NewEncoder(w).Encode(response)
 }
 
-// swagger:route POST /humidity/insert humidity humidityPost
+// swagger:route POST /humidity/insert humidity addHumidity
 // Create a new humidity value
 //
 // responses:
@@ -85,7 +85,6 @@ func (h *BaseHandlerSqlx) PostHumiditySqlx(w http.ResponseWriter, r *http.Reques
 	decoder := json.NewDecoder(r.Body)
 	var reqHumidity *models.ReqAddHumidity
 	err := decoder.Decode(&reqHumidity)
-	fmt.Println(err)
 
 	if err != nil {
 		json.NewEncoder(w).Encode(ErrHandler(lang.Get("invalid_request")))

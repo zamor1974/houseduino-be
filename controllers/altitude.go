@@ -108,7 +108,7 @@ func (h *BaseHandlerSqlx) GetShowDataSqlx(w http.ResponseWriter, r *http.Request
 	json.NewEncoder(w).Encode(response)
 }
 
-// swagger:route POST /altitude/insert altitude altitudePost
+// swagger:route POST /altitude/insert altitude addAltitude
 // Create a new altitude value
 //
 // responses:
@@ -121,7 +121,6 @@ func (h *BaseHandlerSqlx) PostAltitudeSqlx(w http.ResponseWriter, r *http.Reques
 	decoder := json.NewDecoder(r.Body)
 	var reqAltitude *models.ReqAddAltitude
 	err := decoder.Decode(&reqAltitude)
-	fmt.Println(err)
 
 	if err != nil {
 		json.NewEncoder(w).Encode(ErrHandler(lang.Get("invalid_request")))

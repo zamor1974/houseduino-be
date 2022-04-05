@@ -30,6 +30,18 @@ type ReqAddMessage struct {
 	Value string `json:"messaggio" validate:"required"`
 }
 
+// swagger:parameters addMessage
+type ReqMessageBody struct {
+	// - name: body
+	//  in: body
+	//  description: Message
+	//  schema:
+	//  type: object
+	//     "$ref": "#/definitions/ReqAddMessage"
+	//  required: true
+	Body ReqAddMessage `json:"body"`
+}
+
 func GetLastMessageSqlx(db *sql.DB) *Messages {
 	messages := Messages{}
 	rows, err := db.Query(constants.MESSAGE_GET_LAST)
@@ -108,15 +120,14 @@ func PostMessageSqlx(db *sql.DB, reqmessage *ReqAddMessage) (*Message, string) {
 
 	//sqlStatement := fmt.Sprintf("insert into 'pioggia' ('valore','data_inserimento') values (%d,CURRENT_TIMESTAMP) RETURNING id", value)
 	sqlStatement := fmt.Sprintf(constants.MESSAGE_POST_DATA, value)
-
+	//log.Println(sqlStatement)
 	err := db.QueryRow(sqlStatement).Scan(&lastInsertId)
 
 	if err != nil {
 		return &message, ErrHandler(err)
 	}
 
-	sqlStatement1 := fmt.Sprintf("SELECT id,messaggio,data_inserimento FROM attivita where id = %d", lastInsertId)
-	rows, err := db.Query(sqlStatement1)
+	rows, err := db.Query(constants.MESSAGE_GET_LAST)
 
 	if err != nil {
 		log.Fatal(err)
