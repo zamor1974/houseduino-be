@@ -76,6 +76,23 @@ func GetLastPressureSqlx(db *sql.DB) *Pressures {
 	}
 	return &pressures
 }
+func GetLastPressure2Sqlx(db *sql.DB) Pressure {
+	pressures := Pressures{}
+	rows, err := db.Query(constants.PRESSURE_GET_LAST)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var p Pressure
+		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
+			log.Fatal(err)
+		}
+		pressures = append(pressures, p)
+	}
+	return pressures[0]
+}
 func GetPressuresLastHourSqlx(db *sql.DB) *Pressures {
 	pressures := Pressures{}
 

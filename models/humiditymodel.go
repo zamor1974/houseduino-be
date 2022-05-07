@@ -76,6 +76,23 @@ func GetLastHumiditySqlx(db *sql.DB) *Humidities {
 	}
 	return &humidities
 }
+func GetLastHumidity2Sqlx(db *sql.DB) Humidity {
+	humidities := Humidities{}
+	rows, err := db.Query(constants.HUMIDITY_GET_LAST)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var p Humidity
+		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
+			log.Fatal(err)
+		}
+		humidities = append(humidities, p)
+	}
+	return humidities[0]
+}
 func GetHumiditiesLastHourSqlx(db *sql.DB) *Humidities {
 	humidities := Humidities{}
 
