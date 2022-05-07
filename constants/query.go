@@ -38,3 +38,9 @@ const HUMIDITY_GET_LAST = "SELECT id, valore, data_inserimento FROM umidita wher
 const HUMIDITY_GET_LAST_HOUR = "SELECT id,valore,data_inserimento FROM umidita where data_inserimento  >= '%s' AND data_inserimento <= '%s'"
 const HUMIDITY_POST_DATA = "insert into umidita (valore,data_inserimento) values (%.2f,CURRENT_TIMESTAMP) RETURNING id"
 const HUMIDITY_GET_SHOWDATA = "WITH t AS (SELECT id,valore,data_inserimento FROM umidita ORDER BY data_inserimento DESC LIMIT %d) SELECT id,valore,data_inserimento FROM t ORDER BY data_inserimento ASC"
+
+const PLANT_HUMIDITY_GET = "SELECT id, id_pianta, valore, data_inserimento FROM pianta_umidita  where id_pianta =%s  order by id desc limit 100"
+const PLANT_HUMIDITY_GET_LAST = "SELECT id, id_pianta, valore, data_inserimento FROM pianta_umidita where id = (select max(id) from pianta_umidita where id_pianta=%s)"
+const PLANT_HUMIDITY_GET_LAST_HOUR = "SELECT id, id_pianta,valore,data_inserimento FROM pianta_umidita where id_pianta =%s and data_inserimento  >= '%s' AND data_inserimento <= '%s'"
+const PLANT_HUMIDITY_POST_DATA = "insert into pianta_umidita (id_pianta,valore,data_inserimento) values (%s,%.2f,CURRENT_TIMESTAMP) RETURNING id"
+const PLANT_HUMIDITY_GET_SHOWDATA = "WITH t AS (SELECT id, id_pianta,valore,data_inserimento FROM pianta_umidita  where id_pianta =%s ORDER BY data_inserimento DESC LIMIT %d) SELECT id, id_pianta,valore,data_inserimento FROM t  where id_pianta =%s ORDER BY data_inserimento ASC"

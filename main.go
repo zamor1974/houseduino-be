@@ -74,6 +74,11 @@ func main() {
 	houseduino_be.HandleFunc("/humidity/lasthour", hsqlx.GetHumiditiesLastHourSqlx).Methods("GET")
 	houseduino_be.HandleFunc("/humidity/showdata/{recordNumber}", hsqlx.GetHumidityShowDataSqlx).Methods("GET")
 
+	houseduino_be.HandleFunc("/plant/humidity/insert", hsqlx.PostPlantHumiditySqlx).Methods("POST")
+	houseduino_be.HandleFunc("/plant/humidity/all/{id_plant}", hsqlx.GetPlantHumiditiesSqlx).Methods("GET")
+	houseduino_be.HandleFunc("/plant/humidity/lasthour/{id_plant}", hsqlx.GetPlantHumiditiesLastHourSqlx).Methods("GET")
+	houseduino_be.HandleFunc("/plant/humidity/showdata/{id_plant}/{recordNumber}", hsqlx.GetPlantHumidityShowDataSqlx).Methods("GET")
+
 	http.Handle("/", r)
 	s := &http.Server{
 		Addr:    fmt.Sprintf("%s:%s", "", "5558"),

@@ -262,6 +262,44 @@ definitions:
         x-go-name: Status
     type: object
     x-go-package: houseduino-be/controllers
+  GetPlantHumidities:
+    properties:
+      data:
+        $ref: '#/definitions/PlantHumidities'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetPlantHumidity:
+    properties:
+      data:
+        $ref: '#/definitions/PlantHumidity'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
   GetPressure:
     properties:
       data:
@@ -435,6 +473,67 @@ definitions:
       $ref: '#/definitions/Message'
     type: array
     x-go-package: houseduino-be/models
+  Plant:
+    properties:
+      data_inserimento:
+        description: |-
+          Timestamp of insert
+          in: time
+        format: date-time
+        type: string
+        x-go-name: DateInsert
+      id:
+        description: |-
+          Id of plant
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Id
+      name:
+        description: |-
+          Value of Name
+          in: string
+        type: string
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  PlantHumidities:
+    items:
+      $ref: '#/definitions/PlantHumidity'
+    type: array
+    x-go-package: houseduino-be/models
+  PlantHumidity:
+    properties:
+      data_inserimento:
+        description: |-
+          Timestamp of insert
+          in: time
+        format: date-time
+        type: string
+        x-go-name: DateInsert
+      id:
+        description: |-
+          Id of rain value
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Id
+      id_plant:
+        description: |-
+          Id of plant
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: IdPlant
+      valore:
+        description: |-
+          Value of Humidity
+          in: int
+        format: float
+        type: number
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
   Pressure:
     properties:
       data_inserimento:
@@ -535,6 +634,24 @@ definitions:
           Value of the Message
           in: string
         type: string
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  ReqAddPlantHumidity:
+    properties:
+      id_plant:
+        description: |-
+          Id of plant
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: IdPlant
+      valore:
+        description: |-
+          Value of the PlantHumidity
+          in: int
+        format: float
+        type: number
         x-go-name: Value
     type: object
     x-go-package: houseduino-be/models
@@ -863,6 +980,102 @@ paths:
             $ref: '#/definitions/CommonError'
       tags:
       - message
+  /plant/humidity/all/{id_plant}:
+    get:
+      description: Get plantHumidity list
+      operationId: plantHumidityAll
+      parameters:
+      - description: id of the plant
+        format: string
+        in: path
+        name: id_plant
+        required: true
+        type: string
+      responses:
+        "200":
+          description: GetPlantHumidities
+          schema:
+            $ref: '#/definitions/GetPlantHumidities'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - plant
+  /plant/humidity/insert:
+    post:
+      description: Create a new plant humidity value
+      operationId: addPlantHumidity
+      parameters:
+      - description: 'name: body'
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/ReqAddPlantHumidity'
+        x-go-name: Body
+      responses:
+        "200":
+          description: GetPlantHumidity
+          schema:
+            $ref: '#/definitions/GetPlantHumidity'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - plant
+  /plant/humidity/lasthour/{id_plant}:
+    get:
+      description: Get list of last hour of plant humidity values .... or the last
+        value inserted
+      operationId: plantHumiditylastHour
+      parameters:
+      - description: id of the plant
+        format: string
+        in: path
+        name: id_plant
+        required: true
+        type: string
+      responses:
+        "200":
+          description: GetPlantHumidities
+          schema:
+            $ref: '#/definitions/GetPlantHumidities'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - plant
+  /plant/humidity/showdata/{id_plant}/{recordNumber}:
+    get:
+      description: Get list of recordNumber of plant humidity values
+      operationId: plantHumidityShowdata
+      parameters:
+      - description: id of the plant
+        format: string
+        in: path
+        name: id_plant
+        required: true
+        type: string
+      - description: maximum numnber of results to return
+        format: int32
+        in: path
+        name: recordNumber
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: GetHumidities
+          schema:
+            $ref: '#/definitions/GetHumidities'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - plant
   /pressure/all:
     get:
       description: Get Pressure list
