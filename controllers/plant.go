@@ -22,6 +22,17 @@ type GetPlants struct {
 	Data    *models.Plants `json:"data"`
 }
 
+// swagger:model GetPlantsStatus
+type GetPlantsStatus struct {
+	// Status of the error
+	// in: int64
+	Status int64 `json:"status"`
+	// Message of the response
+	// in: string
+	Message string               `json:"message"`
+	Data    *models.PlantsStatus `json:"data"`
+}
+
 // swagger:model GetPlantHumidities
 type GetPlantHumidities struct {
 	// Status of the error
@@ -227,6 +238,25 @@ func (h *BaseHandlerSqlx) GetPlantAllSqlx(w http.ResponseWriter, r *http.Request
 	response := GetPlants{}
 
 	humidities := models.GetPlantAllSqlx(h.db.DB)
+
+	response.Status = 1
+	response.Message = lang.Get("success")
+	response.Data = humidities
+
+	w.Header().Set("content-type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+// swagger:route GET /plant/status plant plantStatus
+// Get plant list
+//
+// responses:
+//  401: CommonError
+//  200: GetPlantsStatus
+func (h *BaseHandlerSqlx) GetPlantsStatusSqlx(w http.ResponseWriter, r *http.Request) {
+	response := GetPlantsStatus{}
+
+	humidities := models.GetPlantsStatusSqlx(h.db.DB)
 
 	response.Status = 1
 	response.Message = lang.Get("success")

@@ -24,6 +24,23 @@ type Plant struct {
 }
 type Plants []Plant
 
+// swagger:model PlantStatus
+type PlantStatus struct {
+	// Id of humidity
+	// in: int64
+	Id int64 `json:"id"`
+	// Name of plant
+	// in: string
+	Name string `json:"nome"`
+	// Value of humidity
+	// in: int64
+	Value float32 `json:"valore"`
+	// Timestamp of insert
+	// in: time
+	DateInsert time.Time `json:"data_inserimento"`
+}
+type PlantsStatus []PlantStatus
+
 // swagger:model PlantHumidity
 type PlantHumidity struct {
 	// Id of rain value
@@ -33,7 +50,7 @@ type PlantHumidity struct {
 	// in: int64
 	IdPlant int64 `json:"id_plant"`
 	// Value of Humidity
-	// in: int
+	// in: float32
 	Value float32 `json:"valore"`
 	// Timestamp of insert
 	// in: time
@@ -51,7 +68,7 @@ type PlantValue struct {
 	// in: string
 	Name string `json:"nome"`
 	// Value of Humidity
-	// in: int
+	// in: float32
 	Value float32 `json:"valore"`
 	// Timestamp of insert
 	// in: time
@@ -258,4 +275,56 @@ func GetPlantAllSqlx(db *sql.DB) *Plants {
 		humidities = append(humidities, p)
 	}
 	return &humidities
+}
+func GetPlantsStatusSqlx(db *sql.DB) *PlantsStatus {
+	pStatus := PlantsStatus{}
+
+	sqlStatement := fmt.Sprintf(constants.PLANT_GET)
+
+	rows, err := db.Query(sqlStatement)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var p Plant
+		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
+			log.Fatal(err)
+		}
+		valore := PlantValue{}
+		sqlStatement2 := fmt.Sprintf(constants.PLANT_HUMIDITY_GET_LAST_VALUE, strconv.FormatInt(p.Id, 10))
+
+		rows, err := db.Query(sqlStatement2)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer rows.Close()
+
+		for rows.Next() {
+			var p PlantValue
+			if err := rows.Scan(&p.Id, &p.Name, &p.Value, &p.DateInsert); err != nil {
+				log.Fatal(err)
+			}
+			valore = p
+		}
+
+		if valore.Id == 0 {
+			var elemento PlantValue
+			elemento.Id = 0
+			elemento.Name = ""
+			elemento.Value = -1
+
+			valore = elemento
+		}
+		var stato PlantStatus
+		stato.Id = valore.Id
+		stato.Name = p.Value
+		stato.Value = valore.Value
+		stato.DateInsert = valore.DateInsert
+
+		pStatus = append(pStatus, stato)
+	}
+
+	return &pStatus
 }

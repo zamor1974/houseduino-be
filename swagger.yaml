@@ -338,6 +338,25 @@ definitions:
         x-go-name: Status
     type: object
     x-go-package: houseduino-be/controllers
+  GetPlantsStatus:
+    properties:
+      data:
+        $ref: '#/definitions/PlantsStatus'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
   GetPressure:
     properties:
       data:
@@ -585,7 +604,38 @@ definitions:
       valore:
         description: |-
           Value of Humidity
-          in: int
+          in: float32
+        format: float
+        type: number
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  PlantStatus:
+    properties:
+      data_inserimento:
+        description: |-
+          Timestamp of insert
+          in: time
+        format: date-time
+        type: string
+        x-go-name: DateInsert
+      id:
+        description: |-
+          Id of humidity
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Id
+      nome:
+        description: |-
+          Name of plant
+          in: string
+        type: string
+        x-go-name: Name
+      valore:
+        description: |-
+          Value of humidity
+          in: int64
         format: float
         type: number
         x-go-name: Value
@@ -616,7 +666,7 @@ definitions:
       valore:
         description: |-
           Value of Humidity
-          in: int
+          in: float32
         format: float
         type: number
         x-go-name: Value
@@ -625,6 +675,11 @@ definitions:
   Plants:
     items:
       $ref: '#/definitions/Plant'
+    type: array
+    x-go-package: houseduino-be/models
+  PlantsStatus:
+    items:
+      $ref: '#/definitions/PlantStatus'
     type: array
     x-go-package: houseduino-be/models
   Pressure:
@@ -1237,6 +1292,21 @@ paths:
           description: GetHumidities
           schema:
             $ref: '#/definitions/GetHumidities'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - plant
+  /plant/status:
+    get:
+      description: Get plant list
+      operationId: plantStatus
+      responses:
+        "200":
+          description: GetPlantsStatus
+          schema:
+            $ref: '#/definitions/GetPlantsStatus'
         "401":
           description: CommonError
           schema:

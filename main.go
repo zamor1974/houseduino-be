@@ -78,6 +78,7 @@ func main() {
 	houseduino_be.HandleFunc("/weather/now", hsqlx.GetWeatherSqlx).Methods("GET")
 
 	houseduino_be.HandleFunc("/plant/all", hsqlx.GetPlantAllSqlx).Methods("GET")
+	houseduino_be.HandleFunc("/plant/status", hsqlx.GetPlantsStatusSqlx).Methods("GET")
 	houseduino_be.HandleFunc("/plant/humidity/insert", hsqlx.PostPlantHumiditySqlx).Methods("POST")
 	houseduino_be.HandleFunc("/plant/humidity/all/{id_plant}", hsqlx.GetPlantHumiditiesSqlx).Methods("GET")
 	houseduino_be.HandleFunc("/plant/humidity/last/{id_plant}", hsqlx.GetPlantLastSqlx).Methods("GET")
@@ -86,7 +87,7 @@ func main() {
 
 	http.Handle("/", r)
 	s := &http.Server{
-		Addr:    fmt.Sprintf("%s:%s", "", "5557"),
+		Addr:    fmt.Sprintf("%s:%s", "", "5559"),
 		Handler: cors.Default().Handler(r),
 	}
 
