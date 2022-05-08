@@ -11,6 +11,17 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// swagger:model GetPlants
+type GetPlants struct {
+	// Status of the error
+	// in: int64
+	Status int64 `json:"status"`
+	// Message of the response
+	// in: string
+	Message string         `json:"message"`
+	Data    *models.Plants `json:"data"`
+}
+
 // swagger:model GetPlantHumidities
 type GetPlantHumidities struct {
 	// Status of the error
@@ -20,6 +31,17 @@ type GetPlantHumidities struct {
 	// in: string
 	Message string                  `json:"message"`
 	Data    *models.PlantHumidities `json:"data"`
+}
+
+// swagger:model GetPlantValue
+type GetPlantValue struct {
+	// Status of the error
+	// in: int64
+	Status int64 `json:"status"`
+	// Message of the response
+	// in: string
+	Message string             `json:"message"`
+	Data    *models.PlantValue `json:"data"`
 }
 
 // swagger:model GetPlantHumidity
@@ -82,6 +104,35 @@ func (h *BaseHandlerSqlx) GetPlantHumiditiesLastHourSqlx(w http.ResponseWriter, 
 	id_plant := vars["id_plant"]
 
 	companies := models.GetPlantHumiditiesLastHourSqlx(h.db.DB, id_plant)
+
+	response.Status = 1
+	response.Message = lang.Get("success")
+	response.Data = companies
+
+	w.Header().Set("content-type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+// swagger:route GET /plant/humidity/last/{id_plant} plant plantHumiditylast
+// Get last value of plant humidity
+//
+//     Parameters:
+//       + name: id_plant
+//         in: path
+//         description: id of the plant
+//         required: true
+//         type: string
+//         format: string
+// responses:
+//  401: CommonError
+//  200: GetPlantHumidities
+func (h *BaseHandlerSqlx) GetPlantLastSqlx(w http.ResponseWriter, r *http.Request) {
+	response := GetPlantValue{}
+	vars := mux.Vars(r)
+
+	id_plant := vars["id_plant"]
+
+	companies := models.GetPlantLastSqlx(h.db.DB, id_plant)
 
 	response.Status = 1
 	response.Message = lang.Get("success")
@@ -157,6 +208,25 @@ func (h *BaseHandlerSqlx) GetPlantHumidityShowDataSqlx(w http.ResponseWriter, r 
 	response := GetPlantHumidities{}
 
 	humidities := models.GetPlantHumidityShowDataSqlx(h.db.DB, id_plant, recordNumber)
+
+	response.Status = 1
+	response.Message = lang.Get("success")
+	response.Data = humidities
+
+	w.Header().Set("content-type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+// swagger:route GET /plant/all plant plantAll
+// Get plant list
+//
+// responses:
+//  401: CommonError
+//  200: GetPlants
+func (h *BaseHandlerSqlx) GetPlantAllSqlx(w http.ResponseWriter, r *http.Request) {
+	response := GetPlants{}
+
+	humidities := models.GetPlantAllSqlx(h.db.DB)
 
 	response.Status = 1
 	response.Message = lang.Get("success")

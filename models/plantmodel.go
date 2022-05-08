@@ -17,11 +17,12 @@ type Plant struct {
 	Id int64 `json:"id"`
 	// Value of Name
 	// in: string
-	Value string `json:"name"`
+	Value string `json:"nome"`
 	// Timestamp of insert
 	// in: time
 	DateInsert time.Time `json:"data_inserimento"`
 }
+type Plants []Plant
 
 // swagger:model PlantHumidity
 type PlantHumidity struct {
@@ -40,6 +41,22 @@ type PlantHumidity struct {
 }
 
 type PlantHumidities []PlantHumidity
+
+// swagger:model PlantValue
+type PlantValue struct {
+	// Id of rain value
+	// in: int64
+	Id int64 `json:"id"`
+	// Name of plant
+	// in: string
+	Name string `json:"nome"`
+	// Value of Humidity
+	// in: int
+	Value float32 `json:"valore"`
+	// Timestamp of insert
+	// in: time
+	DateInsert time.Time `json:"data_inserimento"`
+}
 
 type ReqAddPlantHumidity struct {
 	// Id of plant
@@ -131,6 +148,35 @@ func GetPlantHumiditiesLastHourSqlx(db *sql.DB, idPlant string) *PlantHumidities
 	}
 	return &humidities
 }
+func GetPlantLastSqlx(db *sql.DB, idPlant string) *PlantValue {
+	valore := PlantValue{}
+
+	sqlStatement := fmt.Sprintf(constants.PLANT_HUMIDITY_GET_LAST_VALUE, idPlant)
+
+	rows, err := db.Query(sqlStatement)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var p PlantValue
+		if err := rows.Scan(&p.Id, &p.Name, &p.Value, &p.DateInsert); err != nil {
+			log.Fatal(err)
+		}
+		valore = p
+	}
+
+	if valore.Id == 0 {
+		var elemento PlantValue
+		elemento.Id = 0
+		elemento.Name = ""
+		elemento.Value = -1
+
+		valore = elemento
+	}
+	return &valore
+}
 
 // PostHumiditySqlx insert Humidity value
 func PostPlantHumiditySqlx(db *sql.DB, reqPlantHumidity *ReqAddPlantHumidity) (*PlantHumidity, string) {
@@ -191,5 +237,25 @@ func GetPlantHumidityShowDataSqlx(db *sql.DB, idPlant string, recordNumber int) 
 		humidities = append(humidities, p)
 	}
 
+	return &humidities
+}
+func GetPlantAllSqlx(db *sql.DB) *Plants {
+	humidities := Plants{}
+
+	sqlStatement := fmt.Sprintf(constants.PLANT_GET)
+
+	rows, err := db.Query(sqlStatement)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var p Plant
+		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
+			log.Fatal(err)
+		}
+		humidities = append(humidities, p)
+	}
 	return &humidities
 }

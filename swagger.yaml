@@ -300,6 +300,44 @@ definitions:
         x-go-name: Status
     type: object
     x-go-package: houseduino-be/controllers
+  GetPlantValue:
+    properties:
+      data:
+        $ref: '#/definitions/PlantValue'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
+  GetPlants:
+    properties:
+      data:
+        $ref: '#/definitions/Plants'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
   GetPressure:
     properties:
       data:
@@ -508,7 +546,7 @@ definitions:
         format: int64
         type: integer
         x-go-name: Id
-      name:
+      nome:
         description: |-
           Value of Name
           in: string
@@ -552,6 +590,42 @@ definitions:
         type: number
         x-go-name: Value
     type: object
+    x-go-package: houseduino-be/models
+  PlantValue:
+    properties:
+      data_inserimento:
+        description: |-
+          Timestamp of insert
+          in: time
+        format: date-time
+        type: string
+        x-go-name: DateInsert
+      id:
+        description: |-
+          Id of rain value
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Id
+      nome:
+        description: |-
+          Name of plant
+          in: string
+        type: string
+        x-go-name: Name
+      valore:
+        description: |-
+          Value of Humidity
+          in: int
+        format: float
+        type: number
+        x-go-name: Value
+    type: object
+    x-go-package: houseduino-be/models
+  Plants:
+    items:
+      $ref: '#/definitions/Plant'
+    type: array
     x-go-package: houseduino-be/models
   Pressure:
     properties:
@@ -760,6 +834,12 @@ definitions:
         format: float
         type: number
         x-go-name: Temperature
+      weather_description:
+        description: |-
+          Weather description
+          in: string
+        type: string
+        x-go-name: WeatherDescription
       weather_prevision:
         description: |-
           Weather prevision
@@ -1030,6 +1110,21 @@ paths:
             $ref: '#/definitions/CommonError'
       tags:
       - message
+  /plant/all:
+    get:
+      description: Get plant list
+      operationId: plantAll
+      responses:
+        "200":
+          description: GetPlants
+          schema:
+            $ref: '#/definitions/GetPlants'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - plant
   /plant/humidity/all/{id_plant}:
     get:
       description: Get plantHumidity list
@@ -1069,6 +1164,28 @@ paths:
           description: GetPlantHumidity
           schema:
             $ref: '#/definitions/GetPlantHumidity'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - plant
+  /plant/humidity/last/{id_plant}:
+    get:
+      description: Get last value of plant humidity
+      operationId: plantHumiditylast
+      parameters:
+      - description: id of the plant
+        format: string
+        in: path
+        name: id_plant
+        required: true
+        type: string
+      responses:
+        "200":
+          description: GetPlantHumidities
+          schema:
+            $ref: '#/definitions/GetPlantHumidities'
         "401":
           description: CommonError
           schema:

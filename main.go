@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"houseduino-be/config"
 	"houseduino-be/controllers"
+	"log"
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
@@ -76,8 +77,10 @@ func main() {
 
 	houseduino_be.HandleFunc("/weather/now", hsqlx.GetWeatherSqlx).Methods("GET")
 
+	houseduino_be.HandleFunc("/plant/all", hsqlx.GetPlantAllSqlx).Methods("GET")
 	houseduino_be.HandleFunc("/plant/humidity/insert", hsqlx.PostPlantHumiditySqlx).Methods("POST")
 	houseduino_be.HandleFunc("/plant/humidity/all/{id_plant}", hsqlx.GetPlantHumiditiesSqlx).Methods("GET")
+	houseduino_be.HandleFunc("/plant/humidity/last/{id_plant}", hsqlx.GetPlantLastSqlx).Methods("GET")
 	houseduino_be.HandleFunc("/plant/humidity/lasthour/{id_plant}", hsqlx.GetPlantHumiditiesLastHourSqlx).Methods("GET")
 	houseduino_be.HandleFunc("/plant/humidity/showdata/{id_plant}/{recordNumber}", hsqlx.GetPlantHumidityShowDataSqlx).Methods("GET")
 
@@ -86,5 +89,9 @@ func main() {
 		Addr:    fmt.Sprintf("%s:%s", "", "5557"),
 		Handler: cors.Default().Handler(r),
 	}
-	s.ListenAndServe()
+
+	err := s.ListenAndServe()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
