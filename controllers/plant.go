@@ -248,7 +248,7 @@ func (h *BaseHandlerSqlx) GetPlantAllSqlx(w http.ResponseWriter, r *http.Request
 }
 
 // swagger:route GET /plant/status plant plantStatus
-// Get plant list
+// Get plant status list
 //
 // responses:
 //  401: CommonError
