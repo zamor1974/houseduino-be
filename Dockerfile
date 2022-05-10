@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM golang:1.17
+FROM golang:latest
 WORKDIR /app
 
 COPY go.mod ./

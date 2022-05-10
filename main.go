@@ -1,11 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"houseduino-be/config"
 	"houseduino-be/controllers"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/gorilla/mux"
@@ -86,14 +86,20 @@ func main() {
 	houseduino_be.HandleFunc("/plant/humidity/showdata/{id_plant}/{recordNumber}", hsqlx.GetPlantHumidityShowDataSqlx).Methods("GET")
 
 	http.Handle("/", r)
-	s := &http.Server{
-		Addr:    fmt.Sprintf("%s:%s", "", "5559"),
+	/* 	s := &http.Server{
+		Addr:    fmt.Sprintf("%s:%s", "0.0.0.0", "5559"),
 		Handler: cors.Default().Handler(r),
+	} */
+	s := &http.Server{
+		Handler:      cors.Default().Handler(r),
+		Addr:         ":5559",
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
 	}
 
 	err := s.ListenAndServe()
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Printf("ok")
+
 }
