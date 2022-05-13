@@ -92,7 +92,7 @@ func main() {
 	} */
 	s := &http.Server{
 		Handler:      cors.Default().Handler(r),
-		Addr:         ":5557",
+		Addr:         "127.0.0.1:5557",
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
