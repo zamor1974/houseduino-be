@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"houseduino-be/constants"
 	"houseduino-be/lang"
-	"log"
 	"time"
 )
 
@@ -49,7 +48,7 @@ func GetIsActiveSqlx(db *sql.DB) bool {
 
 	err := db.QueryRow(constants.ACTIVITY_ISACTIVE).Scan(&contatore)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Attività", err)
 	}
 
 	return contatore > 0
@@ -61,14 +60,14 @@ func GetActivitiesSqlx(db *sql.DB) *Activities {
 	rows, err := db.Query(constants.ACTIVITY_GET)
 
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Attività", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Activity
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Attività", err)
 		}
 
 		activities = append(activities, p)
@@ -80,14 +79,14 @@ func GetLastActivitySqlx(db *sql.DB) *Activities {
 	activities := Activities{}
 	rows, err := db.Query(constants.ACTIVITY_GET_LAST)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Attività", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Activity
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Attività", err)
 		}
 		activities = append(activities, p)
 	}
@@ -106,14 +105,14 @@ func GetActivitiesLastHourSqlx(db *sql.DB) *Activities {
 
 	rows, err := db.Query(sqlStatement)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Attività", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Activity
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Attività", err)
 		}
 		activities = append(activities, p)
 	}
@@ -140,6 +139,7 @@ func PostActivitySqlx(db *sql.DB, reqrain *ReqAddActivity) (*Activity, string) {
 	err := db.QueryRow(sqlStatement).Scan(&lastInsertId)
 
 	if err != nil {
+		PrintErrorLog("Attività", err)
 		return &activity, ErrHandler(err)
 	}
 
@@ -147,20 +147,19 @@ func PostActivitySqlx(db *sql.DB, reqrain *ReqAddActivity) (*Activity, string) {
 	rows, err := db.Query(sqlStatement1)
 
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Attività", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Activity
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			// Check for a scan error.
-			// Query rows will be closed with defer.
-			log.Fatal(err)
+			PrintErrorLog("Attività", err)
 		}
 		activity = p
 	}
 	if err != nil {
+		PrintErrorLog("Attività", err)
 		return &activity, lang.Get("no_result")
 	}
 	return &activity, ""

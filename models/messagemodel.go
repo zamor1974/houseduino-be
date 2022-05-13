@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"houseduino-be/constants"
 	"houseduino-be/lang"
-	"log"
 	"time"
 )
 
@@ -46,14 +45,14 @@ func GetLastMessageSqlx(db *sql.DB) *Messages {
 	messages := Messages{}
 	rows, err := db.Query(constants.MESSAGE_GET_LAST)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Messaggio", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Message
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Messaggio", err)
 		}
 		messages = append(messages, p)
 	}
@@ -73,14 +72,14 @@ func GetMessagesLastHourSqlx(db *sql.DB) *Messages {
 
 	rows, err := db.Query(sqlStatement)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Messaggio", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Message
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Messaggio", err)
 		}
 		messages = append(messages, p)
 	}
@@ -95,14 +94,14 @@ func GetMessagessSqlx(db *sql.DB) *Messages {
 	messages := Messages{}
 	rows, err := db.Query(constants.MESSAGE_GET_LAST)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Messaggio", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Message
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Messaggio", err)
 		}
 		messages = append(messages, p)
 	}
@@ -124,26 +123,26 @@ func PostMessageSqlx(db *sql.DB, reqmessage *ReqAddMessage) (*Message, string) {
 	err := db.QueryRow(sqlStatement).Scan(&lastInsertId)
 
 	if err != nil {
+		PrintErrorLog("Messaggio", err)
 		return &message, ErrHandler(err)
 	}
 
 	rows, err := db.Query(constants.MESSAGE_GET_LAST)
 
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Messaggio", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Message
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			// Check for a scan error.
-			// Query rows will be closed with defer.
-			log.Fatal(err)
+			PrintErrorLog("Messaggio", err)
 		}
 		message = p
 	}
 	if err != nil {
+		PrintErrorLog("Messaggio", err)
 		return &message, lang.Get("no_result")
 	}
 	return &message, ""

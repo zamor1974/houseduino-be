@@ -53,7 +53,7 @@ func GetRainsSqlx(db *sql.DB) *Rains {
 	for rows.Next() {
 		var p Rain
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Pioggia", err)
 		}
 		rains = append(rains, p)
 	}
@@ -63,14 +63,14 @@ func GetLastRainSqlx(db *sql.DB) *Rains {
 	rains := Rains{}
 	rows, err := db.Query(constants.RAIN_GET_LAST)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Pioggia", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Rain
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Pioggia", err)
 		}
 		rains = append(rains, p)
 	}
@@ -89,14 +89,14 @@ func GetRainsLastHourSqlx(db *sql.DB) *Rains {
 
 	rows, err := db.Query(sqlStatement)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Pioggia", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Rain
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Pioggia", err)
 		}
 		rains = append(rains, p)
 	}
@@ -123,6 +123,7 @@ func PostRainSqlx(db *sql.DB, reqrain *ReqAddRain) (*Rain, string) {
 	err := db.QueryRow(sqlStatement).Scan(&lastInsertId)
 
 	if err != nil {
+		PrintErrorLog("Pioggia", err)
 		return &rain, ErrHandler(err)
 	}
 
@@ -130,20 +131,19 @@ func PostRainSqlx(db *sql.DB, reqrain *ReqAddRain) (*Rain, string) {
 	rows, err := db.Query(sqlStatement1)
 
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Pioggia", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Rain
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			// Check for a scan error.
-			// Query rows will be closed with defer.
-			log.Fatal(err)
+			PrintErrorLog("Pioggia", err)
 		}
 		rain = p
 	}
 	if err != nil {
+		PrintErrorLog("Pioggia", err)
 		return &rain, lang.Get("no_result")
 	}
 	return &rain, ""
@@ -154,14 +154,14 @@ func GetRainShowDataSqlx(db *sql.DB, recordNumber int) *Rains {
 	sqlStatement := fmt.Sprintf(constants.RAIN_GET_SHOWDATA, recordNumber)
 	rows, err := db.Query(sqlStatement)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Pioggia", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Rain
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Pioggia", err)
 		}
 		rains = append(rains, p)
 	}

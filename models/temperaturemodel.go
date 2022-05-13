@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"houseduino-be/constants"
 	"houseduino-be/lang"
-	"log"
 	"time"
 )
 
@@ -46,14 +45,14 @@ func GetTemperaturesSqlx(db *sql.DB) *Temperatures {
 	temperatures := Temperatures{}
 	rows, err := db.Query(constants.TEMPERATURE_GET)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Temperatura", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Temperature
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Temperatura", err)
 		}
 		temperatures = append(temperatures, p)
 	}
@@ -63,14 +62,14 @@ func GetLastTemperatureSqlx(db *sql.DB) *Temperatures {
 	temperatures := Temperatures{}
 	rows, err := db.Query(constants.TEMPERATURE_GET_LAST)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Temperatura", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Temperature
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Temperatura", err)
 		}
 		temperatures = append(temperatures, p)
 	}
@@ -80,14 +79,14 @@ func GetLastTemperature2Sqlx(db *sql.DB) Temperature {
 	temperatures := Temperatures{}
 	rows, err := db.Query(constants.TEMPERATURE_GET_LAST)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Temperatura", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Temperature
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Temperatura", err)
 		}
 		temperatures = append(temperatures, p)
 	}
@@ -106,14 +105,14 @@ func GetTemperaturesLastHourSqlx(db *sql.DB) *Temperatures {
 
 	rows, err := db.Query(sqlStatement)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Temperatura", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Temperature
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Temperatura", err)
 		}
 		temperatures = append(temperatures, p)
 	}
@@ -140,6 +139,7 @@ func PostTemperatureSqlx(db *sql.DB, reqTemperature *ReqAddTemperature) (*Temper
 	err := db.QueryRow(sqlStatement).Scan(&lastInsertId)
 
 	if err != nil {
+		PrintErrorLog("Temperatura", err)
 		return &temperature, ErrHandler(err)
 	}
 
@@ -147,20 +147,19 @@ func PostTemperatureSqlx(db *sql.DB, reqTemperature *ReqAddTemperature) (*Temper
 	rows, err := db.Query(sqlStatement1)
 
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Temperatura", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Temperature
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			// Check for a scan error.
-			// Query rows will be closed with defer.
-			log.Fatal(err)
+			PrintErrorLog("Temperatura", err)
 		}
 		temperature = p
 	}
 	if err != nil {
+		PrintErrorLog("Temperatura", err)
 		return &temperature, lang.Get("no_result")
 	}
 	return &temperature, ""
@@ -171,14 +170,14 @@ func GetTemperatureShowDataSqlx(db *sql.DB, recordNumber int) *Temperatures {
 	sqlStatement := fmt.Sprintf(constants.TEMPERATURE_GET_SHOWDATA, recordNumber)
 	rows, err := db.Query(sqlStatement)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Temperatura", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Temperature
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Temperatura", err)
 		}
 		temperatures = append(temperatures, p)
 	}

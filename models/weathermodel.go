@@ -3,7 +3,6 @@ package models
 import (
 	"database/sql"
 	"houseduino-be/constants"
-	"log"
 	"strconv"
 )
 
@@ -81,7 +80,7 @@ func GetPrevision(db *sql.DB) Prevision {
 
 	rows, err := db.Query(constants.PREVISION_GET)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Meteo", err)
 	}
 	defer rows.Close()
 
@@ -89,7 +88,7 @@ func GetPrevision(db *sql.DB) Prevision {
 		var descr string
 		var valore string
 		if err := rows.Scan(&descr, &valore); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Meteo", err)
 		}
 		switch descr {
 		case "TIPO PRESSIONE":
@@ -97,28 +96,28 @@ func GetPrevision(db *sql.DB) Prevision {
 		case "PRESSIONE MINIMA":
 			floatNum, err := strconv.ParseFloat(valore, 32)
 			if err != nil {
-				log.Fatal(err)
+				PrintErrorLog("Meteo", err)
 			}
 			prevision.PressureMin = float32(floatNum)
 			break
 		case "PRESSIONE MASSIMA":
 			floatNum, err := strconv.ParseFloat(valore, 32)
 			if err != nil {
-				log.Fatal(err)
+				PrintErrorLog("Meteo", err)
 			}
 			prevision.PressureMax = float32(floatNum)
 			break
 		case "TEMPERATURA MINIMA":
 			floatNum, err := strconv.ParseFloat(valore, 32)
 			if err != nil {
-				log.Fatal(err)
+				PrintErrorLog("Meteo", err)
 			}
 			prevision.TemperatureMin = float32(floatNum)
 			break
 		case "TEMPERATURA MASSIMA":
 			floatNum, err := strconv.ParseFloat(valore, 32)
 			if err != nil {
-				log.Fatal(err)
+				PrintErrorLog("Meteo", err)
 			}
 			prevision.TemperatureMax = float32(floatNum)
 			break

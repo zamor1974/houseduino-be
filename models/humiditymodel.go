@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"houseduino-be/constants"
 	"houseduino-be/lang"
-	"log"
 	"time"
 )
 
@@ -46,14 +45,14 @@ func GetHumiditiesSqlx(db *sql.DB) *Humidities {
 	humidities := Humidities{}
 	rows, err := db.Query(constants.HUMIDITY_GET)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Umidità", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Humidity
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Umidità", err)
 		}
 		humidities = append(humidities, p)
 	}
@@ -63,14 +62,14 @@ func GetLastHumiditySqlx(db *sql.DB) *Humidities {
 	humidities := Humidities{}
 	rows, err := db.Query(constants.HUMIDITY_GET_LAST)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Umidità", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Humidity
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Umidità", err)
 		}
 		humidities = append(humidities, p)
 	}
@@ -80,14 +79,14 @@ func GetLastHumidity2Sqlx(db *sql.DB) Humidity {
 	humidities := Humidities{}
 	rows, err := db.Query(constants.HUMIDITY_GET_LAST)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Umidità", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Humidity
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Umidità", err)
 		}
 		humidities = append(humidities, p)
 	}
@@ -106,14 +105,14 @@ func GetHumiditiesLastHourSqlx(db *sql.DB) *Humidities {
 
 	rows, err := db.Query(sqlStatement)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Umidità", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Humidity
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Umidità", err)
 		}
 		humidities = append(humidities, p)
 	}
@@ -136,30 +135,30 @@ func PostHumiditySqlx(db *sql.DB, reqHumidity *ReqAddHumidity) (*Humidity, strin
 
 	//sqlStatement := fmt.Sprintf("insert into 'pioggia' ('valore','data_inserimento') values (%d,CURRENT_TIMESTAMP) RETURNING id", value)
 	sqlStatement := fmt.Sprintf(constants.HUMIDITY_POST_DATA, value)
-	log.Println(sqlStatement)
+	//log.Println(sqlStatement)
 	err := db.QueryRow(sqlStatement).Scan(&lastInsertId)
 
 	if err != nil {
+		PrintErrorLog("Umidità", err)
 		return &humidity, ErrHandler(err)
 	}
 
 	rows, err := db.Query(constants.HUMIDITY_GET_LAST)
 
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Umidità", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Humidity
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			// Check for a scan error.
-			// Query rows will be closed with defer.
-			log.Fatal(err)
+			PrintErrorLog("Umidità", err)
 		}
 		humidity = p
 	}
 	if err != nil {
+		PrintErrorLog("Umidità", err)
 		return &humidity, lang.Get("no_result")
 	}
 	return &humidity, ""
@@ -170,14 +169,14 @@ func GetHumidityShowDataSqlx(db *sql.DB, recordNumber int) *Humidities {
 	sqlStatement := fmt.Sprintf(constants.HUMIDITY_GET_SHOWDATA, recordNumber)
 	rows, err := db.Query(sqlStatement)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Umidità", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Humidity
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Umidità", err)
 		}
 		humidities = append(humidities, p)
 	}
