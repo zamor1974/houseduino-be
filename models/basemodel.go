@@ -2,6 +2,7 @@ package models
 
 import (
 	"houseduino-be/lang"
+	"log"
 	"os"
 )
 
@@ -14,4 +15,12 @@ func ErrHandler(err error) string {
 		errmessage = lang.Get("something_went_wrong")
 	}
 	return errmessage
+}
+func PrintErrorLog(area string, err error) {
+	log.Printf("%s -> Errore: %s", area, ErrHandler(err))
+
+}
+func PrintStringErrorLog(area string, messaggio string) {
+	log.Printf("%s -> Errore: %s", area, messaggio)
+
 }

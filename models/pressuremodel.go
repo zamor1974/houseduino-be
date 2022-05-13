@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"houseduino-be/constants"
 	"houseduino-be/lang"
-	"log"
 	"time"
 )
 
@@ -46,14 +45,14 @@ func GetPressuresSqlx(db *sql.DB) *Pressures {
 	pressures := Pressures{}
 	rows, err := db.Query(constants.PRESSURE_GET)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Pressione", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Pressure
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Pressione", err)
 		}
 		pressures = append(pressures, p)
 	}
@@ -63,14 +62,14 @@ func GetLastPressureSqlx(db *sql.DB) *Pressures {
 	pressures := Pressures{}
 	rows, err := db.Query(constants.PRESSURE_GET_LAST)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Pressione", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Pressure
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Pressione", err)
 		}
 		pressures = append(pressures, p)
 	}
@@ -80,14 +79,14 @@ func GetLastPressure2Sqlx(db *sql.DB) Pressure {
 	pressures := Pressures{}
 	rows, err := db.Query(constants.PRESSURE_GET_LAST)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Pressione", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Pressure
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Pressione", err)
 		}
 		pressures = append(pressures, p)
 	}
@@ -106,14 +105,14 @@ func GetPressuresLastHourSqlx(db *sql.DB) *Pressures {
 
 	rows, err := db.Query(sqlStatement)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Pressione", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Pressure
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Pressione", err)
 		}
 		pressures = append(pressures, p)
 	}
@@ -140,6 +139,7 @@ func PostPressureSqlx(db *sql.DB, reqPressure *ReqAddPressure) (*Pressure, strin
 	err := db.QueryRow(sqlStatement).Scan(&lastInsertId)
 
 	if err != nil {
+		PrintErrorLog("Pressione", err)
 		return &pressure, ErrHandler(err)
 	}
 
@@ -147,20 +147,19 @@ func PostPressureSqlx(db *sql.DB, reqPressure *ReqAddPressure) (*Pressure, strin
 	rows, err := db.Query(sqlStatement1)
 
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Pressione", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Pressure
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			// Check for a scan error.
-			// Query rows will be closed with defer.
-			log.Fatal(err)
+			PrintErrorLog("Pressione", err)
 		}
 		pressure = p
 	}
 	if err != nil {
+		PrintErrorLog("Pressione", err)
 		return &pressure, lang.Get("no_result")
 	}
 	return &pressure, ""
@@ -173,14 +172,14 @@ func GetPressureShowDataSqlx(db *sql.DB, recordNumber int) *Pressures {
 
 	rows, err := db.Query(sqlStatement)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Pressione", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Pressure
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Pressione", err)
 		}
 		pressures = append(pressures, p)
 	}

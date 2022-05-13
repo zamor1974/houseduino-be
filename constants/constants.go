@@ -1,7 +1,7 @@
 package constants
 
 const DBTYPE = "postgres"
-const DBNAME = "Arduino"
+const DBNAME = "arduino"
 const DBHOST = "192.168.1.250"
 const DBPORT = 5432
 const DBUSERNAME = "arduinoUser"

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"houseduino-be/constants"
 	"houseduino-be/lang"
-	"log"
 	"time"
 )
 
@@ -46,14 +45,14 @@ func GetAltitudesSqlx(db *sql.DB) *Altitudes {
 	altitudes := Altitudes{}
 	rows, err := db.Query(constants.ALTITUDE_GET)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Altitudine", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Altitude
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Altitudine", err)
 		}
 		altitudes = append(altitudes, p)
 	}
@@ -63,14 +62,14 @@ func GetLastAltitudeSqlx(db *sql.DB) *Altitudes {
 	altitudes := Altitudes{}
 	rows, err := db.Query(constants.ALTITUDE_GET_LAST)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Altitudine", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Altitude
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Altitudine", err)
 		}
 		altitudes = append(altitudes, p)
 	}
@@ -89,14 +88,14 @@ func GetAltitudesLastHourSqlx(db *sql.DB) *Altitudes {
 
 	rows, err := db.Query(sqlStatement)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Altitudine", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Altitude
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Altitudine", err)
 		}
 		altitudes = append(altitudes, p)
 	}
@@ -115,14 +114,14 @@ func GetShowDataSqlx(db *sql.DB, recordNumber int) *Altitudes {
 
 	rows, err := db.Query(sqlStatement)
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Altitudine", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Altitude
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			log.Fatal(err)
+			PrintErrorLog("Altitudine", err)
 		}
 		altitudes = append(altitudes, p)
 	}
@@ -145,6 +144,7 @@ func PostAltitudeSqlx(db *sql.DB, reqAltitude *ReqAddAltitude) (*Altitude, strin
 	err := db.QueryRow(sqlStatement).Scan(&lastInsertId)
 
 	if err != nil {
+		PrintErrorLog("Altitudine", err)
 		return &altitude, ErrHandler(err)
 	}
 
@@ -152,20 +152,19 @@ func PostAltitudeSqlx(db *sql.DB, reqAltitude *ReqAddAltitude) (*Altitude, strin
 	rows, err := db.Query(sqlStatement1)
 
 	if err != nil {
-		log.Fatal(err)
+		PrintErrorLog("Altitudine", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var p Altitude
 		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			// Check for a scan error.
-			// Query rows will be closed with defer.
-			log.Fatal(err)
+			PrintErrorLog("Altitudine", err)
 		}
 		altitude = p
 	}
 	if err != nil {
+		PrintErrorLog("Altitudine", err)
 		return &altitude, lang.Get("no_result")
 	}
 	return &altitude, ""
