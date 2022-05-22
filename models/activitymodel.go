@@ -59,18 +59,22 @@ func GetActivitiesSqlx(db *sql.DB) *Activities {
 
 	rows, err := db.Query(constants.ACTIVITY_GET)
 
+	PrintLog("Attività", constants.ACTIVITY_GET)
+
 	if err != nil {
 		PrintErrorLog("Attività", err)
-	}
-	defer rows.Close()
+	} else {
 
-	for rows.Next() {
-		var p Activity
-		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
-			PrintErrorLog("Attività", err)
+		defer rows.Close()
+
+		for rows.Next() {
+			var p Activity
+			if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
+				PrintErrorLog("Attività", err)
+			}
+
+			activities = append(activities, p)
 		}
-
-		activities = append(activities, p)
 	}
 
 	return &activities

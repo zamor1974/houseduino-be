@@ -1,9 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"houseduino-be/config"
 	"houseduino-be/controllers"
-	"log"
 	"net/http"
 	"time"
 
@@ -13,6 +13,11 @@ import (
 )
 
 func main() {
+	loc, errT := time.LoadLocation("Europe/Rome")
+	if errT != nil {
+		config.PrintErrorLog("Main", errT)
+	}
+	time.Local = loc
 
 	r := mux.NewRouter()
 
@@ -85,6 +90,10 @@ func main() {
 	houseduino_be.HandleFunc("/plant/humidity/lasthour/{id_plant}", hsqlx.GetPlantHumiditiesLastHourSqlx).Methods("GET")
 	houseduino_be.HandleFunc("/plant/humidity/showdata/{id_plant}/{recordNumber}", hsqlx.GetPlantHumidityShowDataSqlx).Methods("GET")
 
+	now := time.Now()
+	fmt.Println("The current datetime is:", now)
+
+	hsqlx.GetTestSqlx()
 	http.Handle("/", r)
 	/* 	s := &http.Server{
 		Addr:    fmt.Sprintf("%s:%s", "0.0.0.0", "5559"),
@@ -92,14 +101,14 @@ func main() {
 	} */
 	s := &http.Server{
 		Handler:      cors.Default().Handler(r),
-		Addr:         "127.0.0.1:5557",
+		Addr:         ":5557",
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
 
 	err := s.ListenAndServe()
 	if err != nil {
-		log.Fatal(err)
+		config.PrintErrorLog("Main", err)
 	}
 
 }
