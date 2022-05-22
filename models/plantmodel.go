@@ -274,6 +274,17 @@ func GetPlantAllSqlx(db *sql.DB) *Plants {
 	}
 	return &humidities
 }
+func GetPlantSqlx(db *sql.DB, idPlant string) *Plant {
+
+	sqlStatement := fmt.Sprintf(constants.PLANT_GET2, idPlant)
+	var p Plant
+	err := db.QueryRow(sqlStatement).Scan(&p.Id, &p.Value, &p.DateInsert)
+	if err != nil {
+		PrintErrorLog("Pianta", err)
+	}
+
+	return &p
+}
 func GetPlantsStatusSqlx(db *sql.DB) *PlantsStatus {
 	pStatus := PlantsStatus{}
 

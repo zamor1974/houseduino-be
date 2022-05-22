@@ -33,7 +33,7 @@ type GetMotorStatus struct {
 // responses:
 //  401: CommonError
 //  200: GetMotorStatus
-func (h *BaseHandlerSqlx) GetMotorStatus(w http.ResponseWriter, r *http.Request) {
+func (h *BaseHandlerSqlx) GetMotorStatusSqlx(w http.ResponseWriter, r *http.Request) {
 	response := GetMotorStatus{}
 	vars := mux.Vars(r)
 
@@ -54,7 +54,7 @@ func (h *BaseHandlerSqlx) GetMotorStatus(w http.ResponseWriter, r *http.Request)
 // responses:
 //  401: CommonError
 //  200: GetMotorStatus
-func (h *BaseHandlerSqlx) GetMotorStatusSqlx(w http.ResponseWriter, r *http.Request) {
+func (h *BaseHandlerSqlx) GetMotorStatusAllSqlx(w http.ResponseWriter, r *http.Request) {
 	response := GetMotorStatus{}
 
 	valore := models.GetMotorStatus(h.db.DB)

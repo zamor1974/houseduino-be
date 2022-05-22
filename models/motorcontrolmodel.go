@@ -14,43 +14,57 @@ type MotorStatus struct {
 }
 
 func GetMotorStatus(db *sql.DB) *MotorStatus {
-	humidities := MotorStatus{}
+	var esito int32
+	esito = -1
 
-	sqlStatement := fmt.Sprintf(constants.MOTOR_GET_ALL)
+	sqlStatement := fmt.Sprintf(constants.MOTOR_GET, "1")
 
-	rows, err := db.Query(sqlStatement)
+	err := db.QueryRow(sqlStatement).Scan(&esito)
 	if err != nil {
-		PrintErrorLog("Motore", err)
+		PrintErrorLog("Test", err)
 	}
-	defer rows.Close()
+	risultato := MotorStatus{}
+	pianta := GetPlantSqlx(db, "1")
 
-	for rows.Next() {
-		var p MotorStatus
-		if err := rows.Scan(&p.Value); err != nil {
-			PrintErrorLog("Motore", err)
-		}
-		return &p
+	PrintLog("Motor", fmt.Sprintf("Pianta %s -> valore: %d", pianta.Value, esito))
+
+	if esito < 35 {
+		risultato.Value = true
+	} else if esito > 70 {
+		risultato.Value = false
+	} else if esito == -1 {
+		risultato.Value = false
+	} else {
+		risultato.Value = false
 	}
-	return &humidities
+
+	return &risultato
 }
 
 func GetMotorStatus2(db *sql.DB, idPlant string) *MotorStatus {
-	humidities := MotorStatus{}
+	var esito int32
+	esito = -1
 
 	sqlStatement := fmt.Sprintf(constants.MOTOR_GET, idPlant)
 
-	rows, err := db.Query(sqlStatement)
+	err := db.QueryRow(sqlStatement).Scan(&esito)
 	if err != nil {
-		PrintErrorLog("Motore", err)
+		PrintErrorLog("Test", err)
 	}
-	defer rows.Close()
+	risultato := MotorStatus{}
+	pianta := GetPlantSqlx(db, idPlant)
 
-	for rows.Next() {
-		var p MotorStatus
-		if err := rows.Scan(&p.Value); err != nil {
-			PrintErrorLog("Motore", err)
-		}
-		return &p
+	PrintLog("Motor", fmt.Sprintf("Pianta %s -> valore: %d", pianta.Value, esito))
+
+	if esito == -1 {
+		risultato.Value = false
+	} else if esito > 0 && esito < 35 {
+		risultato.Value = true
+	} else if esito > 70 {
+		risultato.Value = false
+	} else {
+		risultato.Value = false
 	}
-	return &humidities
+
+	return &risultato
 }

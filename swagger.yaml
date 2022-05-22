@@ -262,6 +262,25 @@ definitions:
         x-go-name: Status
     type: object
     x-go-package: houseduino-be/controllers
+  GetMotorStatus:
+    properties:
+      data:
+        $ref: '#/definitions/MotorStatus'
+      message:
+        description: |-
+          Message of the response
+          in: string
+        type: string
+        x-go-name: Message
+      status:
+        description: |-
+          Status of the error
+          in: int64
+        format: int64
+        type: integer
+        x-go-name: Status
+    type: object
+    x-go-package: houseduino-be/controllers
   GetPlantHumidities:
     properties:
       data:
@@ -548,6 +567,16 @@ definitions:
     items:
       $ref: '#/definitions/Message'
     type: array
+    x-go-package: houseduino-be/models
+  MotorStatus:
+    properties:
+      nome:
+        description: |-
+          Value of Name
+          in: bool
+        type: boolean
+        x-go-name: Value
+    type: object
     x-go-package: houseduino-be/models
   Plant:
     properties:
@@ -1165,6 +1194,43 @@ paths:
             $ref: '#/definitions/CommonError'
       tags:
       - message
+  /motor/status/{id_plant}:
+    get:
+      description: Get status of the motor for the plant id
+      operationId: motorStatusId
+      parameters:
+      - description: id of the plant
+        format: string
+        in: path
+        name: id_plant
+        required: true
+        type: string
+      responses:
+        "200":
+          description: GetMotorStatus
+          schema:
+            $ref: '#/definitions/GetMotorStatus'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - motor
+  /motor/status/all:
+    get:
+      description: Get status of motor for all the plants
+      operationId: motorStatus
+      responses:
+        "200":
+          description: GetMotorStatus
+          schema:
+            $ref: '#/definitions/GetMotorStatus'
+        "401":
+          description: CommonError
+          schema:
+            $ref: '#/definitions/CommonError'
+      tags:
+      - motor
   /plant/all:
     get:
       description: Get plant list

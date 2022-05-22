@@ -40,6 +40,7 @@ const HUMIDITY_POST_DATA = "insert into umidita (valore,data_inserimento) values
 const HUMIDITY_GET_SHOWDATA = "WITH t AS (SELECT id,valore,data_inserimento FROM umidita ORDER BY data_inserimento DESC LIMIT %d) SELECT id,valore,data_inserimento FROM t ORDER BY data_inserimento ASC"
 
 const PLANT_GET = "SELECT id, nome, data_inserimento FROM pianta order by id asc"
+const PLANT_GET2 = "SELECT id, nome, data_inserimento FROM pianta where id=%s order by id asc"
 const PLANT_HUMIDITY_GET = "SELECT id, id_pianta, valore, data_inserimento FROM pianta_umidita  where id_pianta =%s  order by id desc limit 100"
 const PLANT_HUMIDITY_GET_LAST = "SELECT id, id_pianta, valore, data_inserimento FROM pianta_umidita where id = (select max(id) from pianta_umidita where id_pianta=%s)"
 const PLANT_HUMIDITY_GET_LAST_HOUR = "SELECT id, id_pianta,valore,data_inserimento FROM pianta_umidita where id_pianta =%s and data_inserimento  >= '%s' AND data_inserimento <= '%s'"
@@ -48,7 +49,7 @@ const PLANT_HUMIDITY_POST_DATA = "insert into pianta_umidita (id_pianta,valore) 
 const PLANT_HUMIDITY_GET_SHOWDATA = "WITH t AS (SELECT id, id_pianta,valore,data_inserimento FROM pianta_umidita  where id_pianta =%s ORDER BY data_inserimento DESC LIMIT %d) SELECT id, id_pianta,valore,data_inserimento FROM t  where id_pianta =%s ORDER BY data_inserimento ASC"
 
 const MOTOR_GET_ALL = "SELECT id, nome, data_inserimento FROM pianta order by id asc"
-const MOTOR_GET = "SELECT id, id_pianta, valore, data_inserimento FROM pianta_umidita  where id_pianta =%s  order by id desc limit 100"
+const MOTOR_GET = "select pu.valore from pianta_umidita pu where pu.id =(select max(pu.id) from pianta_umidita pu where pu.id_pianta =%s and pu.data_inserimento > current_timestamp  -INTERVAL '10 MINUTE')"
 
 const PREVISION_GET = "select 'TIPO PRESSIONE' as Dato, case when round(valore)>1013 then 'ALTA PRESSIONE' else 'BASSA PRESSIONE' end as Valore from  pressione where  id = (select max(id) from pressione) union select 'PRESSIONE MINIMA' as Dato, cast(min(round(valore)) as varchar) as Valore from   (select * from pressione where  data_inserimento <=now() and data_inserimento >= now() - INTERVAL '3 HOURS') t union select 'PRESSIONE MASSIMA' as Dato, cast(max(round(valore)) as varchar) as Valore from  (select * from pressione where  data_inserimento <=now() and data_inserimento >= now() - INTERVAL '3 HOURS') t union select 'TEMPERATURA MINIMA' as Dato, cast(min(round(valore)) as varchar) as Valore from  (select * from temperatura where  data_inserimento <=now() and data_inserimento >= now() - INTERVAL '3 HOURS') t union select 'TEMPERATURA MASSIMA' as Dato,cast(max(round(valore)) as varchar) as Valore from (select * from temperatura where  data_inserimento <=now() and data_inserimento >= now() - INTERVAL '3 HOURS') t"
 

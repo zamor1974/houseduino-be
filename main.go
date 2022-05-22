@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"houseduino-be/config"
 	"houseduino-be/controllers"
 	"net/http"
@@ -90,8 +89,11 @@ func main() {
 	houseduino_be.HandleFunc("/plant/humidity/lasthour/{id_plant}", hsqlx.GetPlantHumiditiesLastHourSqlx).Methods("GET")
 	houseduino_be.HandleFunc("/plant/humidity/showdata/{id_plant}/{recordNumber}", hsqlx.GetPlantHumidityShowDataSqlx).Methods("GET")
 
-	now := time.Now()
-	fmt.Println("The current datetime is:", now)
+	houseduino_be.HandleFunc("/motor/status/{id_plant}", hsqlx.GetMotorStatusSqlx).Methods("GET")
+	houseduino_be.HandleFunc("/motor/status/all", hsqlx.GetMotorStatusAllSqlx).Methods("GET")
+
+	//now := time.Now()
+	//fmt.Println("The current datetime is:", now)
 
 	hsqlx.GetTestSqlx()
 	http.Handle("/", r)
