@@ -33,6 +33,10 @@ type Weather struct {
 	// Weather description
 	// in: string
 	WeatherDescription string `json:"weather_description"`
+
+	//Last update
+	//in: string
+	LastUpdate string `json:"last_update"`
 }
 
 type Prevision struct {
@@ -49,11 +53,13 @@ func GetWeatherSqlx(db *sql.DB) *Weather {
 	var temperature = GetLastTemperature2Sqlx(db)
 	var humidity = GetLastHumidity2Sqlx(db)
 	var pressure = GetLastPressure2Sqlx(db)
+	var lastUpdate = GetLastActivityDatetimeSqlx(db)
 	//var prevision = GetPrevision(db)
 
 	weather.Temperature = temperature.Value
 	weather.Humidity = humidity.Value
 	weather.Pressure = pressure.Value
+	weather.LastUpdate = lastUpdate
 
 	if weather.Pressure > 1014 {
 		weather.WeatherPrevision = sunny

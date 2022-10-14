@@ -96,6 +96,25 @@ func GetLastActivitySqlx(db *sql.DB) *Activities {
 	}
 	return &activities
 }
+
+func GetLastActivityDatetimeSqlx(db *sql.DB) string {
+	activities := Activities{}
+	rows, err := db.Query(constants.ACTIVITY_GET_LAST)
+	if err != nil {
+		PrintErrorLog("Attività", err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var p Activity
+		if err := rows.Scan(&p.Id, &p.Value, &p.DateInsert); err != nil {
+			PrintErrorLog("Attività", err)
+		}
+		activities = append(activities, p)
+	}
+	return activities[0].DateInsert.Format("02/01/2006 15:04:05")
+}
+
 func GetActivitiesLastHourSqlx(db *sql.DB) *Activities {
 	activities := Activities{}
 
