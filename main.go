@@ -4,6 +4,7 @@ import (
 	"houseduino-be/config"
 	"houseduino-be/controllers"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/go-openapi/runtime/middleware"
@@ -11,13 +12,10 @@ import (
 	"github.com/rs/cors"
 )
 
+func init() {
+	os.Setenv("TZ", "Europe/Rome")
+}
 func main() {
-	loc, errT := time.LoadLocation("Europe/Rome")
-	if errT != nil {
-		config.PrintErrorLog("Main", errT)
-	}
-	time.Local = loc
-
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
